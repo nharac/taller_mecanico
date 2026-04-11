@@ -1,19 +1,29 @@
 <?php
     header("Content-Type: application/json");
-
     include("../conexion.php");
 
-    $sql = "SELECT id_cliente FROM Cliente WHERE Cedula = ?";
-    $params = array($cedula);
-    
-    $stmt = sqlsrv_query($conn, $sql, $params);
+    $cedula = $_GET['numDocumento'] ?? null;
 
-    if($stmt === false){
-        echo json_encode(["error" => sqlsrv_errors()]);
-        exit;
+    if (!$cedula) {
+        echo json_encode(["error" => "Sin cédula"]);
+        exit();
     }
 
-    $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)
+    $sql = "SELECT id_cliente FROM Cliente WHERE Cedula = ?";
+    $params = [$cedula];
 
-    echo json_encode($row);
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt === false) {
+        echo json_encode(["error" => sqlsrv_errors()]);
+        exit();
+    }
+
+    $cliente = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+
+    if ($cliente) {
+        echo json_encode($cliente);
+    } else {
+        echo json_encode(null);
+    }
 ?>

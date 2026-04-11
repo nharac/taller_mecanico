@@ -28,17 +28,7 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" href="vehiculos.php">Vehiculos</a></li>
-                <li class="nav-item"><a class="nav-link active" href="clientes.php">Clientes</a></li>
-                <li class="nav-item"><a class="nav-link active" href="ordenTrabajo.php">Ordenes de Trabajo</a></li>
-                <li class="nav-item"><a class="nav-link active" href="repuestos.php">Repuestos</a></li>
-                <li class="nav-item"><a class="nav-link active" href="servicios.php">Servicios</a></li>
-            </ul>
-        </nav>
-    </header>
+
 
      <div class="container-fluid row">
 
@@ -99,7 +89,66 @@
                 value="ok">Registrar</button>
         </form>
 
-        <div class="col-8 p-4">
+            <input type="hidden" id="id_cliente" name="id_cliente">
+
+
+        </div>
+
+    </form>
+
+    <form class="col-4 offset-4 p-3">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Vehiculo</label>
+            <select class="form-select" id="vehiculo_input">
+                <option value="">Selecciona...</option>
+            </select>  
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Servicio</label>
+            <select class="form-select" id="servicio_input">
+                <option value=""> Selecciona... </option>
+                <?php foreach($servicios as $ser): ?>
+                    <option value="<?= $ser['id_servicio'] ?>">
+                        <?= $ser['Nombre_servicio'] ?>
+                </option>
+                <?php endforeach; ?>
+            </select>        
+        </div>
+        <div class="mb-3">
+            <label for="check">¿El servicio requiere de repuesto?</label>
+            <input type="checkbox" id="check" name="repuesto_hay" value="yes">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nombre del repuesto</label>
+            <select name="dropdown_repuesto" class="form-select">
+                <option value=""> Selecciona... </option>
+                <?php foreach($repuestos as $rep): ?>
+                    <option value="<?= $rep['id_Repuesto'] ?>">
+                        <?= $rep['Nombre_Repuesto'] ?>
+                </option>
+                <?php endforeach; ?>
+            </select>     
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Trabajador responsable</label>
+            <input type="text" class="form-control" name="nombre">
+        </div>
+         <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Valor total</label>
+            <input type="text" class="form-control" name="valor">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Fecha y hora de inicio</label>
+            <input type="datetime-local" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Fecha y hora de finalizacion</label>
+            <input type="datetime-local" class="form-control">
+        </div>
+        <button type="submit" id="btnRegistrarOrdenTrabajo" class="btn btn-primary"name="btnregistrar" value="ok">Registrar</button>
+    </form>
+   
+    <div class="col-12 p-4">
             <table class="table">
                 <thead class="table-primary">
                     <tr>
@@ -141,6 +190,13 @@
             </table>
         </div>
     </div>
+</div> 
+
+
+
+
+    <script src="buscarVehiculosPorCliente.js"></script>
+    <script src="buscarCliente.js"></script>.
 </body>
 
 </html>
