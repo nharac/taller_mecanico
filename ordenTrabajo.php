@@ -1,26 +1,23 @@
 <?php
+    // Tus consultas a la API (mantenlas arriba)
     $jsonRepuestos = file_get_contents("http://localhost/TallerMecanica/api/obtenerNombresRepuestos.php");
     $repuestos = json_decode($jsonRepuestos, true);
 
     $jsonServicios = file_get_contents("http://localhost/TallerMecanica/api/obtenerNombresServicios.php");
     $servicios = json_decode($jsonServicios, true);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orden de Trabajo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
-<<<<<<< HEAD
-    <link rel="stylesheet" href="https://unpkg.com/dselect@latest/dist/css/dselect.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/b42da86e0b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dselect@latest/dist/css/dselect.css">
     <script src="https://unpkg.com/dselect@latest/dist/js/dselect.js"></script>
+
     <?php
     include "conexion.php";
     include "verTabla.php";
@@ -29,9 +26,6 @@
     $result = $obj->listaOrdenes();
     ?>
 </head>
-=======
-    </head>
->>>>>>> b40d47756126850e30502d870662e7b11b08c171
 
 <body>
 
@@ -102,36 +96,54 @@
         </div>
         <button type="submit" id="btnRegistrarOrdenTrabajo" class="btn btn-primary"name="btnregistrar" value="ok">Registrar</button>
     </form>
-    <div class="col-12 p-4">
-<table class="table">
-  <thead class="table-primary">
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Estado</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Valor Total</th>
-      <th scope="col">Hora de inicio</th>
-      <th scope="col">Hora finalizacion</th>
-      <th scope="col">Trabajador R</th>
-      <th scope="col">Repuesto</th>
-      <th scope="col">Repuesto</th>
-      <th scope="col">Vehiculo</th>
-      <th scope="col">Servicio</th>
-      <th scope="col"></th>
-  
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-    </tr>
-  </tbody>
-</table>
+        <div class="col-12 p-4">
+            <table class="table">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Valor Total</th>
+                        <th scope="col">Hora inicio</th>
+                        <th scope="col">Hora fin</th>
+                        <th scope="col">Trabajador R</th>
+                        <th scope="col">Vehiculo</th>
+                        <th scope="col">Servicio</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($fila = sqlsrv_fetch_object($result)) { ?>
+                        <tr>
+                            <th scope="row"><?= $fila->id_OrdenTrabajo ?></th>
+                            <td><?= $fila->estado ?></td>
+                            <td><?= $fila->Cedula ?></td>
+                            <td>$<?= number_format($fila->Valor_Total, 0, ',', '.') ?></td>
+                            <td><?= $fila->Hora_Inicio ? $fila->Hora_Inicio->format('d/m/H:i') : '---' ?></td>
+                            <td><?= $fila->Hora_finalizacion ? $fila->Hora_finalizacion->format('d/m/H:i') : '---' ?></td>
+                            <td><?= $fila->Trabajador_Responsable ?></td>
+                            <td><?= $fila->Tipo ?></td>
+                            <td><?= $fila->Nombre_servicio ?></td>
+                            <td>
+                                <a href="CRUD/eliminar_orden.php?id=<?= $fila->id_OrdenTrabajo ?>" 
+                                   onclick="return confirm('¿Segura de eliminar?')" 
+                                   class="btn btn-warning btn-sm">
+                                   <i class="fa-solid fa-pen-to-square"></i></a>
+
+                                <a href="#" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div> 
->>>>>>> b40d47756126850e30502d870662e7b11b08c171
+
+
 
 
     <script src="buscarVehiculosPorCliente.js"></script>
     <script src="buscarCliente.js"></script>.
 </body>
-
 </html>
