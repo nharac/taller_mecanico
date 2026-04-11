@@ -1,15 +1,22 @@
+<?php
+    $jsonRepuestos = file_get_contents("http://localhost/TallerMecanica/api/obtenerNombresRepuestos.php");
+    $repuestos = json_decode($jsonRepuestos, true);
+
+    $jsonServicios = file_get_contents("http://localhost/TallerMecanica/api/obtenerNombresServicios.php");
+    $servicios = json_decode($jsonServicios, true);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Orden de Trabajo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://unpkg.com/dselect@latest/dist/css/dselect.css">
-    <script src="https://unpkg.com/dselect@latest/dist/js/dselect.js"></script>
     </head>
 
 <body>
@@ -34,6 +41,7 @@
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Numero de Documento</label>
             <input type="text" class="form-control" name="numDocumento">
+            <button type="button" class="btn btn-primary">Buscar</button>
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Vehiculo</label>
@@ -47,10 +55,12 @@
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Servicio</label>
             <select class="form-select" id="servicio_input">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value=""> Selecciona... </option>
+                <?php foreach($servicios as $ser): ?>
+                    <option value="<?= $ser['id_servicio'] ?>">
+                        <?= $ser['Nombre_servicio'] ?>
+                </option>
+                <?php endforeach; ?>
             </select>        
         </div>
         <div class="mb-3">
@@ -59,11 +69,13 @@
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Nombre del repuesto</label>
-            <select name="select_box" class="form-select" id="select_box">
+            <select name="dropdown_repuesto" class="form-select">
                 <option value=""> Selecciona... </option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>   
+                <?php foreach($repuestos as $rep): ?>
+                    <option value="<?= $rep['id_Repuesto'] ?>">
+                        <?= $rep['Nombre_Repuesto'] ?>
+                </option>
+                <?php endforeach; ?>
             </select>     
         </div>
         <div class="mb-3">

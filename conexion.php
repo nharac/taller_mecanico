@@ -10,6 +10,6 @@
     $conn = sqlsrv_connect($serverName, $connectionOptions);
 
     if ($conn === false) {
-        die(print(sqlsrv_errors(), true));
+        die(print_r(sqlsrv_errors(), true));
     }
 ?>
