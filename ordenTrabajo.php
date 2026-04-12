@@ -17,17 +17,40 @@
     <script src="https://kit.fontawesome.com/b42da86e0b.js" crossorigin="anonymous"></script>
 
     <?php
-    include "conexion/conexion.php";
-    include "verTabla.php";
+        include "conexion/conexion.php";
+        include "verTabla.php";
 
-    $obj = new tabla($conn);
-    $result = $obj->listaOrdenes();
+        $obj = new tabla($conn);
+        $result = $obj->listaOrdenes();
     ?>
 </head>
 
 <body>
 
     <div class="container-fluid row">
+
+        <h2 class="text-center text-secondary">Órdenes Activas</h2>
+
+        <div class="text-center mb-3">
+            <button onclick="anterior()" class="btn btn-secondary">Anterior</button>
+            <button onclick="siguiente()" class="btn btn-primary">Siguiente</button>
+        </div>
+
+        <table class="table table-bordered text-center">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Estado</th>
+                    <th>Valor</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Trabajador</th>
+                </tr>
+            </thead>
+            <tbody id="tablaOrden"></tbody>
+        </table>
+
+
    
     <form class="col-4 offset-4 p-3" name="form">
         <h3 class="text-center text-secondary">Registrar Orden de Trabajo</h3>
@@ -150,5 +173,6 @@
     <script src="backend/buscarVehiculosPorCliente.js"></script>
     <script src="backend/buscarCliente.js"></script>.
     <script src="backend/RecogerDatosOrden.js"></script>
+    <script src="nodo.js"></script>
 </body>
 </html>
